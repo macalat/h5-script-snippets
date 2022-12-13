@@ -1,0 +1,31 @@
+{
+  "name": "h5-script-snippets",
+  "displayName": "H5 Script Snippets",
+  "description": "H5 Script code snippets",
+  "version": "0.0.1",
+  "publisher": "macalat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/macalat/test"
+  },
+  "icon": "icon.png",
+  "keywords": [
+		"H5",
+		"Infor",
+		"M3"
+	],
+  "engines": {
+    "vscode": "^1.40.0"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "typescript",
+        "path": "./snippets/snippets.code-snippets"
+      }
+    ]
+  }
+}

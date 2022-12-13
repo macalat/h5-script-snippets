@@ -1,0 +1,744 @@
+{
+    // Place your snippets for TypeScript here. Each snippet is defined under a snippet name and has a prefix, body and
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, ${id} and ${id:label} and ${1:label} for variables. Variables with the same id are connected.
+    // Example:
+    "H5 Bootstrap": {
+        "prefix": "h5start",
+        "body": [
+            "/**",
+            " *      ${2:Define Script}",
+            " *",
+            " * AUTHOR: ${3:John Doe}",
+            " * email: ${4:johndoe@noreply.com}",
+            " *",
+            " * @Note",
+            " *      If changes are needed to be done on the script.",
+            " *      Kindly email the last person who modified to provide the latest typescript file.",
+            " *",
+            " * @CHANGELOGS",
+            " * USER                 ActionLog   Date        Description",
+            " *",
+            " */\n",
+
+            "class ${1:H5Scripts} {",
+                "\tprivate scriptName = '${1:H5Scripts}';",
+                "\tprivate controller: IInstanceController;",
+                "\tprivate log: IScriptLog;",
+                "\tprivate contentElement: IContentElement;\n",
+
+                "\tprivate miService: any;\n",
+
+                "\tprivate panelName: string;                                  // Panel Name where this script is attached",
+                "\tprivate removeRequesting: any;                              // Use for detaching Requesting event",
+                "\tprivate removeRequestCompleted: any;                        // Use for detaching Request completed event",
+                "\tprivate cache = InstanceCache;                              // Use to create a cache instance when script is loaded for the first time",
+                "\tprivate key = this.scriptName;                              // Unique key for InstanceCache\n",
+
+                "\tpublic static Init(args: IScriptArgs): void {",
+                "\t\tnew ${1:H5Scripts}(args).run();",
+                "\t}\n",
+
+                "\tconstructor(scriptArgs: IScriptArgs) {",
+                    "\t\tthis.controller = scriptArgs.controller;",
+                    "\t\tthis.log = scriptArgs.log;\n",
+                    "\t\tthis.miService = ScriptUtil.version >= 2.0 ? MIService : MIService.Current;",
+                "\t}\n",
+
+                "\t// Start your code here",
+                "\tprivate main() {",
+                    "\t\t${5:console.log('Hello World');}",
+                "\t}\n",
+
+                "\tprivate onRequesting(args: CancelRequestEventArgs): void {",
+                    "\t\t",
+                "\t}\n",
+
+                "\tprivate onRequestCompleted(args: RequestEventArgs): void {",
+                    "\t\t// Detach events when no longer on the panel",
+                    "\t\tif (this.getPanelName() !== this.panelName) {",
+                        "\t\t\tthis.disconnect();",
+                    "\t\t}",
+                "\t}\n",
+
+                "\t/**",
+                "\t * New H5 returns the same panelName for Browse and Text panel",
+                "\t */",
+                "\tprivate getPanelName(): string {",
+                    "\t\treturn ScriptUtil.version >= 2.0 ? this.controller.Response['panel']['name'] : this.controller.GetPanelName();",
+                "\t}\n",
+
+                "\t/**",
+                "\t *  Attach H5 lifecycle events",
+                "\t */",
+                "\tprivate connect(): void {",
+                    "\t\tthis.removeRequesting = this.controller.Requesting.On((e) => {",
+                        "\t\t\tthis.onRequesting(e);",
+                    "\t\t});",
+
+                    "\t\tthis.removeRequestCompleted = this.controller.RequestCompleted.On((e) => {",
+                        "\t\t\tthis.onRequestCompleted(e);",
+                    "\t\t});",
+                "\t}\n",
+
+                "\t/**",
+                "\t *  Detach event",
+                "\t */",
+                "\tprivate disconnect(): void {",
+                    "\t\tthis.removeRequesting();",
+                    "\t\tthis.removeRequestCompleted();",
+                    "\t\tthis.cache.Remove(this.controller, this.key);",
+                    "\t\tthis.log.Info('...Script detached');",
+                "\t}\n",
+
+                "\tpublic run(): void {",
+                    "\t\tthis.contentElement = this.controller.GetContentElement();",
+                    "\t\tthis.log.Info('...Script running');",
+                    "\t\t// Get the panel name where this script is attached",
+                    "\t\tthis.panelName = this.controller.GetPanelName();\n",
+
+                    "\t\tthis.main();\n",
+
+                    "\t\t// Check the instance cache to see if this script has already attached to this program instance.",
+                    "\t\tif (this.cache.ContainsKey(this.controller, this.key)) {",
+                    "\t\t\t// The script is already attached to this instance.",
+                    "\t\t\treturn;",
+                    "\t\t}\n",
+
+                    "\t\t// Add a key to the instance cache to prevent other instances of this script on the same program instance.",
+                    "\t\tthis.cache.Add(this.controller, this.key, true);\n",
+
+                    "\t\t// Attach event",
+                    "\t\tthis.connect();",
+                "\t}",
+            "}"
+        ],
+        "description": "H5 Bootstrap"
+    },
+
+    "H5 Bootstrap with translation": {
+        "prefix": "h5start-translate",
+        "body": [
+            "/**",
+            " *      ${2:Define Script}",
+            " *",
+            " * AUTHOR: ${3:John Doe}",
+            " * email: ${4:johndoe@noreply.com}",
+            " *",
+            " * @Note",
+            " *      If changes are needed to be done on the script.",
+            " *      Kindly email the last person who modified to provide the latest typescript file.",
+            " *",
+            " * @CHANGELOGS",
+            " * USER                 ActionLog   Date        Description",
+            " *",
+            " */\n",
+
+            "class ${1:H5Scripts} {",
+                "\tprivate scriptName = '${1:H5Scripts}';",
+                "\tprivate controller: IInstanceController;",
+                "\tprivate log: IScriptLog;",
+                "\tprivate contentElement: IContentElement;\n",
+
+                "\tprivate miService: any;\n",
+
+                "\tprivate panelName: string;                                  // Panel Name where this script is attached",
+                "\tprivate removeRequesting: any;                              // Use for detaching Requesting event",
+                "\tprivate removeRequestCompleted: any;                        // Use for detaching Request completed event",
+                "\tprivate cache = InstanceCache;                              // Use to create a cache instance when script is loaded for the first time",
+                "\tprivate key = this.scriptName;                              // Unique key for InstanceCache\n",
+
+                "\tprivate translations: I${1:H5Scripts}_Lang = {",
+                    "\t\tGB: {",
+                        "\t\t\tmessage: 'Hello World',",
+                        "\t\t\terror: 'Error message'",
+                    "\t\t}",
+                "\t};\n",
+
+                "\tprivate language: I${1:H5Scripts}_Texts = this.translations.GB;\n",
+
+                "\tpublic static Init(args: IScriptArgs): void {",
+                "\t\tnew ${1:H5Scripts}(args).run();",
+                "\t}\n",
+
+                "\tconstructor(scriptArgs: IScriptArgs) {",
+                    "\t\tthis.controller = scriptArgs.controller;",
+                    "\t\tthis.log = scriptArgs.log;\n",
+                    "\t\tthis.miService = ScriptUtil.version >= 2.0 ? MIService : MIService.Current;",
+                "\t}\n",
+
+                "\t// Start your code here",
+                "\tprivate main() {",
+                    "\t\t// Set translations based on current language the user is on",
+                    "\t\tthis.language = this.translations[ScriptUtil.GetUserContext().CurrentLanguage];\n",
+
+                    "\t\t${5:console.log(this.language.message);}",
+                "\t}\n",
+
+                "\tprivate onRequesting(args: CancelRequestEventArgs): void {",
+                    "\t\t",
+                "\t}\n",
+
+                "\tprivate onRequestCompleted(args: RequestEventArgs): void {",
+                    "\t\t// Detach events when no longer on the panel",
+                    "\t\tif (this.getPanelName() !== this.panelName) {",
+                        "\t\t\tthis.disconnect();",
+                    "\t\t}",
+                "\t}\n",
+
+                "\t/**",
+                "\t * New H5 returns the same panelName for Browse and Text panel",
+                "\t */",
+                "\tprivate getPanelName(): string {",
+                    "\t\treturn ScriptUtil.version >= 2.0 ? this.controller.Response['panel']['name'] : this.controller.GetPanelName();",
+                "\t}\n",
+
+                "\t/**",
+                "\t *  Attach H5 lifecycle events",
+                "\t */",
+                "\tprivate connect(): void {",
+                    "\t\tthis.removeRequesting = this.controller.Requesting.On((e) => {",
+                        "\t\t\tthis.onRequesting(e);",
+                    "\t\t});",
+
+                    "\t\tthis.removeRequestCompleted = this.controller.RequestCompleted.On((e) => {",
+                        "\t\t\tthis.onRequestCompleted(e);",
+                    "\t\t});",
+                "\t}\n",
+
+                "\t/**",
+                "\t *  Detach event",
+                "\t */",
+                "\tprivate disconnect(): void {",
+                    "\t\tthis.removeRequesting();",
+                    "\t\tthis.removeRequestCompleted();",
+                    "\t\tthis.cache.Remove(this.controller, this.key);",
+                    "\t\tthis.log.Info('...Script detached');",
+                "\t}\n",
+
+                "\tpublic run(): void {",
+                    "\t\tthis.contentElement = this.controller.GetContentElement();",
+                    "\t\tthis.log.Info('...Script running');",
+                    "\t\t// Get the panel name where this script is attached",
+                    "\t\tthis.panelName = this.controller.GetPanelName();\n",
+
+                    "\t\tthis.main();\n",
+
+                    "\t\t// Check the instance cache to see if this script has already attached to this program instance.",
+                    "\t\tif (this.cache.ContainsKey(this.controller, this.key)) {",
+                    "\t\t\t// The script is already attached to this instance.",
+                    "\t\t\treturn;",
+                    "\t\t}\n",
+
+                    "\t\t// Add a key to the instance cache to prevent other instances of this script on the same program instance.",
+                    "\t\tthis.cache.Add(this.controller, this.key, true);\n",
+
+                    "\t\t// Attach event",
+                    "\t\tthis.connect();",
+                "\t}",
+            "}\n",
+
+            "interface I${1:H5Scripts}_Texts {",
+                "\tmessage: string;",
+                "\terror: string;",
+            "}\n",
+
+            "interface I${1:H5Scripts}_Lang {",
+                "\t[key: string]: I${1:H5Scripts}_Texts;",
+            "}"
+        ],
+        "description": "H5 Bootstrap with translation"
+    },
+
+    "H5 Bootstrap - No Lifecycle hook": {
+        "prefix": "h5start-no-LCH",
+        "body": [
+            "/**",
+            " *      ${2:Define Script}",
+            " *",
+            " * AUTHOR: ${3:John Doe}",
+            " * email: ${4:johndoe@noreply.com}",
+            " *",
+            " * @Note",
+            " *      If changes are needed to be done on the script.",
+            " *      Kindly email the last person who modified to provide the latest typescript file.",
+            " *",
+            " * @CHANGELOGS",
+            " * USER                 ActionLog   Date        Description",
+            " *",
+            " */\n",
+            "class ${1:H5Scripts} {",
+                "\tprivate controller: IInstanceController;",
+                "\tprivate log: IScriptLog;",
+                "\tprivate contentElement: IContentElement;\n",
+                "\tprivate miService: any;\n",
+
+                "\tpublic static Init(args: IScriptArgs): void {",
+                "\t\tnew ${1:H5Scripts}(args).run();",
+                "\t}\n",
+
+                "\tconstructor(scriptArgs: IScriptArgs) {",
+                    "\t\tthis.controller = scriptArgs.controller;",
+                    "\t\tthis.log = scriptArgs.log;\n",
+
+                    "\t\tthis.miService = ScriptUtil.version >= 2.0 ? MIService : MIService.Current;",
+                "\t}\n",
+
+                "\t// Start your code here",
+                "\tprivate main() {",
+                    "\t\t${5:console.log('Hello World');}",
+                "\t}\n",
+
+                "\tpublic run(): void {",
+                    "\t\tthis.contentElement = this.controller.GetContentElement();",
+                    "\t\tthis.log.Info('...Script running');",
+
+                    "\t\tthis.main();",
+                "\t}",
+            "}"
+        ],
+        "description": "H5 Bootstrap without lifecycle hook"
+    },
+
+    "H5 Bootstrap - No Lifecycle hook with translation": {
+        "prefix": "h5start-no-LCH-translate",
+        "body": [
+            "/**",
+            " *      ${2:Define Script}",
+            " *",
+            " * AUTHOR: ${3:John Doe}",
+            " * email: ${4:johndoe@noreply.com}",
+            " *",
+            " * @Note",
+            " *      If changes are needed to be done on the script.",
+            " *      Kindly email the last person who modified to provide the latest typescript file.",
+            " *",
+            " * @CHANGELOGS",
+            " * USER                 ActionLog   Date        Description",
+            " *",
+            " */\n",
+            "class ${1:H5Scripts} {",
+                "\tprivate controller: IInstanceController;",
+                "\tprivate log: IScriptLog;",
+                "\tprivate contentElement: IContentElement;\n",
+                "\tprivate miService: any;\n",
+
+                "\tprivate translations: I${1:H5Scripts}_Lang = {",
+                    "\t\tGB: {",
+                        "\t\t\tmessage: 'Hello World',",
+                        "\t\t\terror: 'Error message'",
+                    "\t\t}",
+                "\t};\n",
+
+                "\tprivate language: I${1:H5Scripts}_Texts = this.translations.GB;\n",
+
+                "\tpublic static Init(args: IScriptArgs): void {",
+                "\t\tnew ${1:H5Scripts}(args).run();",
+                "\t}\n",
+
+                "\tconstructor(scriptArgs: IScriptArgs) {",
+                    "\t\tthis.controller = scriptArgs.controller;",
+                    "\t\tthis.log = scriptArgs.log;\n",
+                    "\t\tthis.miService = ScriptUtil.version >= 2.0 ? MIService : MIService.Current;",
+                "\t}\n",
+
+                "\t// Start your code here",
+                "\tprivate main() {",
+                    "\t\t// Set translations based on current language the user is on",
+                    "\t\tthis.language = this.translations[ScriptUtil.GetUserContext().CurrentLanguage];\n",
+
+                    "\t\t${5:console.log(this.language.message);}",
+                "\t}\n",
+
+                "\tpublic run(): void {",
+                    "\t\tthis.contentElement = this.controller.GetContentElement();",
+                    "\t\tthis.log.Info('...Script running');",
+
+                    "\t\tthis.main();",
+                "\t}",
+            "}\n",
+
+            "interface I${1:H5Scripts}_Texts {",
+                "\tmessage: string;",
+                "\terror: string;",
+            "}\n",
+
+            "interface I${1:H5Scripts}_Lang {",
+                "\t[key: string]: I${1:H5Scripts}_Texts;",
+            "}"
+        ],
+        "description": "H5 Bootstrap without lifecycle hook with translation"
+    },
+
+    "H5 MI Service": {
+        "prefix": "h5MI",
+        "body": [
+            "private async getUser(): Promise<any> {",
+                "\tconst req: IMIRequest = {",
+                    "\t\tprogram: '${1:MNS150MI}',",
+                    "\t\ttransaction: '${2:GetUserData}',",
+                    "\t\toutputFields: ['USID', 'TX40'],",
+                    "\t\trecord: {",
+                        "\t\t\tUSID: userContext.USID",
+                    "\t\t}",
+                "\t};",
+
+                "\treturn await this.miService.executeRequest(req);",
+            "}"
+        ],
+        "description": "H5 MIService"
+    },
+
+    "H5 ExportMI": {
+        "prefix": "H5ExportMI",
+        "body": [
+            "/**",
+            " * Execute EXPORTMI.SelectPad",
+            " */",
+            "private async exportMI(QERY: string): Promise<any> {",
+                "\tconst req: IMIRequest = {",
+                "\t\tprogram: 'EXPORTMI',",
+                    "\t\ttransaction: 'SelectPad',",
+                    "\t\trecord: {",
+                    "\t\t\tSEPC: '|',",
+                    "\t\t\tHDRS: '1',",
+                    "\t\t\tQERY: QERY",
+                    "\t\t}",
+                "\t};",
+                "\tconst res =  await this.miService.executeRequest(req);",
+                "\treturn this.parseREPL(res);",
+            "}\n",
+
+            "/**",
+            " * Parse output of EXPORTMI transaction",
+            " */",
+            "private parseREPL(res: any, separator = '|'): any {",
+                "\tif (res.items.length === 1) {",
+                "\t\treturn { items: [] };",
+                "\t}\n",
+
+                "\tconst headers = res.item.REPL.split(separator);",
+                "\tconst items = [];\n",
+
+                "\t// Loop through records, skip the first record since that is the header",
+                "\tconst count = res.items.length;",
+                "\tfor (let i = 1; i < count; i++) {",
+                    "\t\t// Split string response",
+                    "\t\tconst values = res.items[i].REPL.split('|');",
+                    "\t\tconst keyValue = {};",
+                    "\t\t// Loop through all the values to create an array of key-value pair",
+                    "\t\tvalues.forEach((value: string, index: number) => {",
+                    "\t\t\tkeyValue[headers[index]] = value;",
+                    "\t\t});",
+                    "\t\titems.push(keyValue);",
+                "\t}\n",
+
+                "\treturn {",
+                "\t\titems: items,",
+                "\t\titem: items[0]",
+                "\t};",
+            "}"
+        ],
+        "description": "ExportMI"
+    },
+
+    "H5 Button Factory Method": {
+        "prefix": "h5addbutton",
+        "body": [
+            "/**",
+            " * Creates a button",
+            " * @param id Id of the button",
+            " * @param text The text to appear on the button",
+            " * @param top Top position",
+            " * @param left Left position",
+            " */",
+            "private createButton(id: string, text: string, top: number, left: number): JQuery {",
+                "\tconst buttonElement = new ButtonElement();",
+                "\tbuttonElement.Name = id;",
+                "\tbuttonElement.Value = text;",
+                "\tbuttonElement.Position = new PositionElement();",
+                "\tbuttonElement.Position.Top = top;",
+                "\tbuttonElement.Position.Left = left;",
+                "\treturn this.contentElement.AddElement(buttonElement);",
+            "}"
+        ],
+        "description": "H5 add button factory"
+    },
+
+    "H5 Label Factory Method": {
+        "prefix": "h5addlabel",
+        "body": [
+            "/**",
+            " * Creates a label",
+            " * @param id Id of the label",
+            " * @param text The text to appear on the label",
+            " * @param top Top position",
+            " * @param left Left position",
+            " */",
+            "private createLabel(id: string, text: string, top: number, left: number): JQuery {",
+                "\tconst labelElement = new LabelElement();",
+                "\tlabelElement.Name = id;",
+                "\tlabelElement.Value = text;",
+                "\tlabelElement.Position = new PositionElement();",
+                "\tlabelElement.Position.Top = top;",
+                "\tlabelElement.Position.Left = left;",
+                "\treturn this.contentElement.AddElement(labelElement);",
+            "}"
+        ],
+        "description": "H5 add label factory"
+    },
+
+    "H5 TextBox Factory Method": {
+        "prefix": "h5addtextbox",
+        "body": [
+            "/**",
+            " * Creates a textbox",
+            " * @param id Id of the textbox",
+            " * @param text The text to appear on the textbox",
+            " * @param top Top position",
+            " * @param left Left position",
+            " * @param width Width of the textbox",
+            " */",
+            "private createTextBox(id: string, text: string, top: number, left: number, width: number): JQuery {",
+                "\tconst textBoxElement  = new TextBoxElement();",
+                "\ttextBoxElement.Name = id;",
+                "\ttextBoxElement.Value = text;",
+                "\ttextBoxElement.Position = new PositionElement();",
+                "\ttextBoxElement.Position.Top = top;",
+                "\ttextBoxElement.Position.Left = left;",
+                "\ttextBoxElement.Position.Width = width;",
+                "\treturn this.contentElement.AddElement(textBoxElement);",
+            "}"
+        ],
+        "description": "H5 add textbox factory"
+    },
+
+    "H5 Element (Label and Textbox) Factory Method": {
+        "prefix": "h5addelement",
+        "body": [
+            "/**",
+            " * Creates a new html element",
+            " * @param type - Type of control to be created",
+            " * @param text - The text to appear on the element",
+            " * @param top - Top position",
+            " * @param left - Left position",
+            " * @param width - Width of the element",
+            " */",
+            "createElement(type: ControlType, text: string, top: number, left: number, width: number, isEnabled = true): JQuery {",
+                "\tlet element: IBaseElement;",
+                "\tswitch (type) {",
+                    "\t\tcase ControlType.Label:",
+                        "\t\t\telement = new LabelElement();",
+                        "\t\t\tbreak;",
+                    "\t\tcase ControlType.TextBox:",
+                        "\t\t\telement = new TextBoxElement();",
+                        "\t\t\telement.IsEnabled = isEnabled;",
+                        "\t\t\tbreak;",
+                "\t}",
+                "\telement.Value = text;",
+                "\telement.Position = new PositionElement();",
+                "\telement.Position.Top = top;",
+                "\telement.Position.Left = left;",
+                "\telement.Position.Width = width;",
+                "\treturn this.contentElement.AddElement(element);",
+            "}\n",
+            "// TODO: Move these codes at the bottom of your script, outside the class definition",
+            "// @ts-ignore",
+            "enum ControlType { Label, TextBox }"
+        ],
+        "description": "H5 add element factory"
+    },
+
+    "H5 Combobox Factory Method": {
+        "prefix": "h5addcombobox",
+        "body": [
+            "/**",
+            " * Creates a new ComboBox",
+            " * @param items - List of items for the dropdown",
+            " * @param top - Top position",
+            " * @param left - Left position",
+            " * @param width - Width of the element",
+            " */",
+            "private createComboBox(id: string, items: ComboBoxItemElement[], value: string, top: number, left: number, width: number): JQuery {",
+                "\tconst comboBoxElement = new ComboBoxElement();",
+                "\tfor (let item of items) {",
+                    "\t\tconst cboxItem = new ComboBoxItemElement();",
+                    "\t\tcboxItem.Value = item['Value'];",
+                    "\t\tcboxItem.Text = item['Text'];",
+                    "\t\tcomboBoxElement.Items.push(cboxItem);",
+                "\t}",
+                "\tcomboBoxElement.Name = id;",
+                "\tcomboBoxElement.Value = value;",
+                "\tcomboBoxElement.Position = new PositionElement();",
+                "\tcomboBoxElement.Position.Top = top;",
+                "\tcomboBoxElement.Position.Left = left;",
+                "\tcomboBoxElement.Position.Width = width;",
+                "\treturn this.contentElement.AddElement(comboBoxElement);",
+            "}"
+        ],
+        "description": "H5 add combobox factory"
+    },
+
+    "H5 Add Button": {
+        "prefix": "h5singlebutton",
+        "body": [
+            "const ${1:buttonElement} = new ButtonElement();",
+            "${1:buttonElement}.Value = '${2:Click Me!}';\n",
+
+               "const ${3:button} = ControlFactory.CreateButton(${1:buttonElement});",
+            "${3:button}.Position = {",
+                "\tWidth: ${4:70},",
+                "\tTop: ${5:5},",
+                "\tLeft: ${6:500}",
+            "};\n",
+
+            "${3:button}.click(() => {",
+                "\t${7:this.log.Info('testing button clicked!');}",
+            "});\n",
+
+            "this.contentElement.Add(${3:button});"
+        ],
+        "description": "H5 add single button"
+    },
+
+    "H5 Add TextBox": {
+        "prefix": "h5addsingletextbox",
+        "body": [
+            "const ${1:textBoxElement} = new TextBoxElement();",
+
+               "const ${2:textBox} = ControlFactory.CreateTextBox(${1:textBoxElement});",
+            "${2:textBox}.Position = {",
+                "\tWidth: ${3:100},",
+                "\tTop: ${4:5},",
+                "\tLeft: ${5:150}",
+            "};\n",
+
+            "${2:textBox}.on('keyup paste', () => {",
+                "\t${7:this.log.Info('textbox changed to ' + textBox.val());}",
+            "});\n",
+
+            "this.contentElement.Add(${2:textBox});"
+        ],
+        "description": "H5 add single textBox"
+    },
+
+    "H5 Add ComboBox": {
+        "prefix": "h5addsinglecombobox",
+        "body": [
+            "const ${1:comboBoxElement} = new ComboBoxElement();",
+             "${1:comboBoxElement}.Name = '${2:myComboBox}';\n",
+
+            "${1:comboBoxElement}.Items = [",
+                "\t{",
+                    "\t\tName: 'name 1',",
+                    "\t\tText: 'text 1',",
+                    "\t\tValue: 'value 1',",
+                    "\t\tIsSelected: true",
+                "\t},",
+                "\t{",
+                    "\t\tName: 'name 2',",
+                    "\t\tText: 'text 2',",
+                    "\t\tValue: 'value 2'",
+                "\t},",
+                "\t{",
+                    "\t\tName: 'name 3',",
+                    "\t\tText: 'text 3',",
+                    "\t\tValue: 'value 3'",
+                "\t}",
+            "];\n",
+
+            "const ${3:comboBox} = ControlFactory.CreateComboBox(${1:comboBoxElement});",
+            "${3:comboBox}.Position = {",
+                "\tWidth: ${4:100},",
+                "\tTop: ${5:5},",
+                "\tLeft: ${6:240}",
+            "};\n",
+
+            "${3:comboBox}.change(function() {",
+                "\t${7:console.log('changed selected to ' + this.value);}",
+            "});\n",
+
+            "this.contentElement.Add(${3:comboBox});"
+        ],
+        "description": "H5 Add comboBox"
+    },
+
+    "H5 ScriptUtil GetFieldValue": {
+        "prefix": "h5getfieldvalue",
+        "body": [
+            "ScriptUtil.GetFieldValue(this.controller, '${WEITNO}');"
+        ],
+        "description": "H5 ScriptUtil.GetFieldValue"
+    },
+
+    "H5 ScriptUtil SetFieldValue": {
+        "prefix": "h5setfieldvalue",
+        "body": [
+            "ScriptUtil.SetFieldValue('${1:WEITNO}', '${2:new value}', this.controller);"
+        ],
+        "description": "H5 ScriptUtil.SetFieldValue"
+    },
+
+    "H5 Custom dialog": {
+        "prefix": "h5customdialog",
+            "description": "Custom dialog function",
+                "body": [
+                    "/**",
+                    " * ${1:Define dialog}",
+                    " */",
+                    "private showDialog(): void {",
+                        "\t// Create a new div with an id of jsGrid",
+                        "\tlet browseDialogContent = $('${2:<p>custom dialog</p>}');",
+                        "\tlet broweDialogButtons = [ // Close dialog box",
+                            "\t\t{",
+                                "\t\t\ttext: 'Close',",
+                                "\t\t\twidth: 85,",
+                                    "\t\t\tid: 'close-dialog-button',",
+                                    "\t\t\tclick: function (event, model) {",
+                                    "\t\t\t\tif (ScriptUtil.version >= 2.0) {",
+                                    "\t\t\t\t\tmodel.close(true);",
+                                    "\t\t\t\t} else {",
+                                        "\t\t\t\t\t$(this).inforDialog('close');",
+                                    "\t\t\t\t}",
+                                "\t\t\t}",
+                            "\t\t}",
+                        "\t];\n",
+
+                        "\tlet browseDialogOptions = {",
+                            "\t\ttitle: '${3:Title}',",
+                            "\t\tdialogType: 'General',",
+                            "\t\tmodal: true,",
+                            "\t\twidth: 500,",
+                            "\t\tminHeight: 300,",
+                            "\t\ticon: 'search',",
+                            "\t\tcloseOnEscape: true,",
+                            "\t\tbuttons: broweDialogButtons",
+                        "\t};\n",
+
+                        "\t// Show the dialog",
+                        "\tif (ScriptUtil.version >= 2.0) {",
+                            "\t\tH5ControlUtil.H5Dialog.CreateDialogElement(browseDialogContent[0], browseDialogOptions);",
+                        "\t} else {",
+                        "\t\tbrowseDialogContent.inforMessageDialog(browseDialogOptions);",
+                        "\t}",
+                    "}"
+                ],
+    },
+
+    "H5 Show/Hide Busy indicator": {
+        "prefix": "h5busyindicator",
+        "body": [
+            "/**",
+            " * Show or hide busy indicator",
+            " */",
+            "private setBusy(isBusy: boolean): void {",
+                "\tif (ScriptUtil.version >= 2.0) {",
+                    "\t\tthis.controller.busyIndicator.displayDelay = 0;",
+                    "\t\tisBusy ? this.controller.busyIndicator.open(0) : this.controller.busyIndicator.close();",
+                    "\t\treturn;",
+                "\t}",
+                "\tisBusy ? $('body').inforBusyIndicator({ modal: true }) : $('body').inforBusyIndicator('close');",
+            "}"
+        ]
+    }
+}

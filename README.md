@@ -39,6 +39,14 @@ Press `Tab` to cycle through variables.
 
 - Initial release
 
+### 1.0.1
+
+- Update repository link
+
+### 1.0.2
+
+- Fix wrong snippets for `h5getfieldvalue` and `h5MI`
+
 ---
 
 ## For more information

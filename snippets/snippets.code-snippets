@@ -379,7 +379,7 @@
                     "\t\ttransaction: '${2:GetUserData}',",
                     "\t\toutputFields: ['USID', 'TX40'],",
                     "\t\trecord: {",
-                        "\t\t\tUSID: userContext.USID",
+                        "\t\t\tUSID: ScriptUtil.GetUserContext().USID",
                     "\t\t}",
                 "\t};",
 
@@ -666,7 +666,7 @@
     "H5 ScriptUtil GetFieldValue": {
         "prefix": "h5getfieldvalue",
         "body": [
-            "ScriptUtil.GetFieldValue(this.controller, '${WEITNO}');"
+            "ScriptUtil.GetFieldValue('${WEITNO}', this.controller);"
         ],
         "description": "H5 ScriptUtil.GetFieldValue"
     },

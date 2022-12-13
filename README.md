@@ -1,7 +1,7 @@
 # H5 Script Snippets
 
 This is a collection of snippets for Infor's **H5 Scripting language** that I personally use.
-![](https://raw.githubusercontent.com/macalat/h5-script-snippets/main/images/h5-script-snippets.gif)
+![](https://raw.githubusercontent.com/macalat/h5-script-snippets/master/images/h5-script-snippets.gif)
 
 ## Usage
 

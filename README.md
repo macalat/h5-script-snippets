@@ -34,18 +34,21 @@ Press `Tab` to cycle through variables.
 | `h5addsingletextbox`          | Old way of creating single textbox (use for quick testing)                        |
 | `h5addsinglecombobox`         | Old way of creating single combobox (use for quick testing)                       |
 
+---
 
-### 1.0.0
+## Change Log
 
-- Initial release
-
-### 1.0.1
-
-- Update repository link
+### 1.0.3
+- Fixed license and change logs
 
 ### 1.0.2
-
 - Fix wrong snippets for `h5getfieldvalue` and `h5MI`
+
+### 1.0.1
+- Update repository link
+
+### 1.0.0
+- Initial release
 
 ---
 

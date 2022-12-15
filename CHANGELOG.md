@@ -1,9 +1,13 @@
 # Change Log
 
-All notable changes to the "h5-script-snippets" extension will be documented in this file.
+## 1.0.3
+- Fixed license and change logs
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## 1.0.2
+- Fix wrong snippets for `h5getfieldvalue` and `h5MI`
 
-## [Unreleased]
+## 1.0.1
+- Update repository link
 
+## 1.0.0
 - Initial release

@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.4
+- Add translation check and include $host on h5-start snippets
+
 ## 1.0.3
 - Fixed license and change logs
 

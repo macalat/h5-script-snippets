@@ -27,7 +27,8 @@
                 "\tprivate log: IScriptLog;",
                 "\tprivate contentElement: IContentElement;\n",
 
-                "\tprivate miService: any;\n",
+                "\tprivate miService: any;",
+                "\tprivate \\$host: JQuery;\n",
 
                 "\tprivate panelName: string;                                  // Panel Name where this script is attached",
                 "\tprivate removeRequesting: any;                              // Use for detaching Requesting event",
@@ -92,6 +93,7 @@
                 "\t}\n",
 
                 "\tpublic run(): void {",
+                    "\t\tthis.\\$host = this.controller.ParentWindow;",
                     "\t\tthis.contentElement = this.controller.GetContentElement();",
                     "\t\tthis.log.Info('...Script running');",
                     "\t\t// Get the panel name where this script is attached",
@@ -140,7 +142,8 @@
                 "\tprivate log: IScriptLog;",
                 "\tprivate contentElement: IContentElement;\n",
 
-                "\tprivate miService: any;\n",
+                "\tprivate miService: any;",
+                "\tprivate \\$host: JQuery;\n",
 
                 "\tprivate panelName: string;                                  // Panel Name where this script is attached",
                 "\tprivate removeRequesting: any;                              // Use for detaching Requesting event",
@@ -170,7 +173,10 @@
                 "\t// Start your code here",
                 "\tprivate main() {",
                     "\t\t// Set translations based on current language the user is on",
-                    "\t\tthis.language = this.translations[ScriptUtil.GetUserContext().CurrentLanguage];\n",
+                    "\t\tconst currentLang = ScriptUtil.GetUserContext().CurrentLanguage;",
+                    "\t\tif (this.translations[currentLang]) {",
+                        "\t\t\tthis.language = this.translations[currentLang];",
+                    "\t\t}\n",
 
                     "\t\t${5:console.log(this.language.message);}",
                 "\t}\n",
@@ -217,6 +223,7 @@
                 "\t}\n",
 
                 "\tpublic run(): void {",
+                    "\t\tthis.\\$host = this.controller.ParentWindow;",
                     "\t\tthis.contentElement = this.controller.GetContentElement();",
                     "\t\tthis.log.Info('...Script running');",
                     "\t\t// Get the panel name where this script is attached",
@@ -271,7 +278,9 @@
                 "\tprivate controller: IInstanceController;",
                 "\tprivate log: IScriptLog;",
                 "\tprivate contentElement: IContentElement;\n",
-                "\tprivate miService: any;\n",
+
+                "\tprivate miService: any;",
+                "\tprivate \\$host: JQuery;\n",
 
                 "\tpublic static Init(args: IScriptArgs): void {",
                 "\t\tnew ${1:H5Scripts}(args).run();",
@@ -290,6 +299,7 @@
                 "\t}\n",
 
                 "\tpublic run(): void {",
+                    "\t\tthis.\\$host = this.controller.ParentWindow;",
                     "\t\tthis.contentElement = this.controller.GetContentElement();",
                     "\t\tthis.log.Info('...Script running');",
 
@@ -321,7 +331,9 @@
                 "\tprivate controller: IInstanceController;",
                 "\tprivate log: IScriptLog;",
                 "\tprivate contentElement: IContentElement;\n",
-                "\tprivate miService: any;\n",
+
+                "\tprivate miService: any;",
+                "\tprivate \\$host: JQuery;\n",
 
                 "\tprivate translations: I${1:H5Scripts}_Lang = {",
                     "\t\tGB: {",
@@ -345,12 +357,16 @@
                 "\t// Start your code here",
                 "\tprivate main() {",
                     "\t\t// Set translations based on current language the user is on",
-                    "\t\tthis.language = this.translations[ScriptUtil.GetUserContext().CurrentLanguage];\n",
+                    "\t\tconst currentLang = ScriptUtil.GetUserContext().CurrentLanguage;",
+                    "\t\tif (this.translations[currentLang]) {",
+                        "\t\t\tthis.language = this.translations[currentLang];",
+                    "\t\t}\n",
 
                     "\t\t${5:console.log(this.language.message);}",
                 "\t}\n",
 
                 "\tpublic run(): void {",
+                    "\t\tthis.\\$host = this.controller.ParentWindow;",
                     "\t\tthis.contentElement = this.controller.GetContentElement();",
                     "\t\tthis.log.Info('...Script running');",
 

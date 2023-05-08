@@ -749,11 +749,10 @@
             " */",
             "private setBusy(isBusy: boolean): void {",
                 "\tif (ScriptUtil.version >= 2.0) {",
-                    "\t\tthis.controller.busyIndicator.displayDelay = 0;",
-                    "\t\tisBusy ? this.controller.busyIndicator.open(0) : this.controller.busyIndicator.close();",
-                    "\t\treturn;",
+                    "\t\tisBusy ? this.controller.busyIndicator.open() : this.controller.busyIndicator.close();",
+                "\t} else {",
+                "\t\tisBusy ? $('body').inforBusyIndicator() : $('body').inforBusyIndicator('close');",
                 "\t}",
-                "\tisBusy ? $('body').inforBusyIndicator({ modal: true }) : $('body').inforBusyIndicator('close');",
             "}"
         ]
     }

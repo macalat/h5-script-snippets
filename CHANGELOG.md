@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.5
+- Cleanup busyindicator snippet
+
 ## 1.0.4
 - Add translation check and include $host on h5-start snippets
 

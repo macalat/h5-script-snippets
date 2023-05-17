@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.0
+- Changed attaching and detaching of events on simpler approach
+- Renamed connect and disconnect to attachEvents and detachEvents respectively
+
 ## 1.0.5
 - Cleanup busyindicator snippet
 

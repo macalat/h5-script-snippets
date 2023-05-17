@@ -22,7 +22,6 @@
             " */\n",
 
             "class ${1:H5Scripts} {",
-                "\tprivate scriptName = '${1:H5Scripts}';",
                 "\tprivate controller: IInstanceController;",
                 "\tprivate log: IScriptLog;",
                 "\tprivate contentElement: IContentElement;\n",
@@ -30,11 +29,8 @@
                 "\tprivate miService: any;",
                 "\tprivate \\$host: JQuery;\n",
 
-                "\tprivate panelName: string;                                  // Panel Name where this script is attached",
                 "\tprivate removeRequesting: any;                              // Use for detaching Requesting event",
                 "\tprivate removeRequestCompleted: any;                        // Use for detaching Request completed event",
-                "\tprivate cache = InstanceCache;                              // Use to create a cache instance when script is loaded for the first time",
-                "\tprivate key = this.scriptName;                              // Unique key for InstanceCache\n",
 
                 "\tpublic static Init(args: IScriptArgs): void {",
                 "\t\tnew ${1:H5Scripts}(args).run();",
@@ -56,23 +52,13 @@
                 "\t}\n",
 
                 "\tprivate onRequestCompleted(args: RequestEventArgs): void {",
-                    "\t\t// Detach events when no longer on the panel",
-                    "\t\tif (this.getPanelName() !== this.panelName) {",
-                        "\t\t\tthis.disconnect();",
-                    "\t\t}",
-                "\t}\n",
-
-                "\t/**",
-                "\t * New H5 returns the same panelName for Browse and Text panel",
-                "\t */",
-                "\tprivate getPanelName(): string {",
-                    "\t\treturn ScriptUtil.version >= 2.0 ? this.controller.Response['panel']['name'] : this.controller.GetPanelName();",
+                    "\t\tthis.detachEvents();",
                 "\t}\n",
 
                 "\t/**",
                 "\t *  Attach H5 lifecycle events",
                 "\t */",
-                "\tprivate connect(): void {",
+                "\tprivate attachEvents(): void {",
                     "\t\tthis.removeRequesting = this.controller.Requesting.On((e) => {",
                         "\t\t\tthis.onRequesting(e);",
                     "\t\t});",
@@ -83,12 +69,11 @@
                 "\t}\n",
 
                 "\t/**",
-                "\t *  Detach event",
+                "\t *  Detach events",
                 "\t */",
-                "\tprivate disconnect(): void {",
+                "\tprivate detachEvents(): void {",
                     "\t\tthis.removeRequesting();",
                     "\t\tthis.removeRequestCompleted();",
-                    "\t\tthis.cache.Remove(this.controller, this.key);",
                     "\t\tthis.log.Info('...Script detached');",
                 "\t}\n",
 
@@ -96,22 +81,11 @@
                     "\t\tthis.\\$host = this.controller.ParentWindow;",
                     "\t\tthis.contentElement = this.controller.GetContentElement();",
                     "\t\tthis.log.Info('...Script running');",
-                    "\t\t// Get the panel name where this script is attached",
-                    "\t\tthis.panelName = this.controller.GetPanelName();\n",
 
                     "\t\tthis.main();\n",
 
-                    "\t\t// Check the instance cache to see if this script has already attached to this program instance.",
-                    "\t\tif (this.cache.ContainsKey(this.controller, this.key)) {",
-                    "\t\t\t// The script is already attached to this instance.",
-                    "\t\t\treturn;",
-                    "\t\t}\n",
-
-                    "\t\t// Add a key to the instance cache to prevent other instances of this script on the same program instance.",
-                    "\t\tthis.cache.Add(this.controller, this.key, true);\n",
-
-                    "\t\t// Attach event",
-                    "\t\tthis.connect();",
+                    "\t\t// Attach events",
+                    "\t\tthis.attachEvents();",
                 "\t}",
             "}"
         ],
@@ -137,7 +111,6 @@
             " */\n",
 
             "class ${1:H5Scripts} {",
-                "\tprivate scriptName = '${1:H5Scripts}';",
                 "\tprivate controller: IInstanceController;",
                 "\tprivate log: IScriptLog;",
                 "\tprivate contentElement: IContentElement;\n",
@@ -145,11 +118,8 @@
                 "\tprivate miService: any;",
                 "\tprivate \\$host: JQuery;\n",
 
-                "\tprivate panelName: string;                                  // Panel Name where this script is attached",
                 "\tprivate removeRequesting: any;                              // Use for detaching Requesting event",
                 "\tprivate removeRequestCompleted: any;                        // Use for detaching Request completed event",
-                "\tprivate cache = InstanceCache;                              // Use to create a cache instance when script is loaded for the first time",
-                "\tprivate key = this.scriptName;                              // Unique key for InstanceCache\n",
 
                 "\tprivate translations: I${1:H5Scripts}_Lang = {",
                     "\t\tGB: {",
@@ -186,23 +156,13 @@
                 "\t}\n",
 
                 "\tprivate onRequestCompleted(args: RequestEventArgs): void {",
-                    "\t\t// Detach events when no longer on the panel",
-                    "\t\tif (this.getPanelName() !== this.panelName) {",
-                        "\t\t\tthis.disconnect();",
-                    "\t\t}",
-                "\t}\n",
-
-                "\t/**",
-                "\t * New H5 returns the same panelName for Browse and Text panel",
-                "\t */",
-                "\tprivate getPanelName(): string {",
-                    "\t\treturn ScriptUtil.version >= 2.0 ? this.controller.Response['panel']['name'] : this.controller.GetPanelName();",
+                    "\t\tthis.detachEvents();",
                 "\t}\n",
 
                 "\t/**",
                 "\t *  Attach H5 lifecycle events",
                 "\t */",
-                "\tprivate connect(): void {",
+                "\tprivate attachEvents(): void {",
                     "\t\tthis.removeRequesting = this.controller.Requesting.On((e) => {",
                         "\t\t\tthis.onRequesting(e);",
                     "\t\t});",
@@ -213,12 +173,11 @@
                 "\t}\n",
 
                 "\t/**",
-                "\t *  Detach event",
+                "\t *  Detach events",
                 "\t */",
-                "\tprivate disconnect(): void {",
+                "\tprivate detachEvents(): void {",
                     "\t\tthis.removeRequesting();",
                     "\t\tthis.removeRequestCompleted();",
-                    "\t\tthis.cache.Remove(this.controller, this.key);",
                     "\t\tthis.log.Info('...Script detached');",
                 "\t}\n",
 
@@ -226,22 +185,11 @@
                     "\t\tthis.\\$host = this.controller.ParentWindow;",
                     "\t\tthis.contentElement = this.controller.GetContentElement();",
                     "\t\tthis.log.Info('...Script running');",
-                    "\t\t// Get the panel name where this script is attached",
-                    "\t\tthis.panelName = this.controller.GetPanelName();\n",
 
                     "\t\tthis.main();\n",
 
-                    "\t\t// Check the instance cache to see if this script has already attached to this program instance.",
-                    "\t\tif (this.cache.ContainsKey(this.controller, this.key)) {",
-                    "\t\t\t// The script is already attached to this instance.",
-                    "\t\t\treturn;",
-                    "\t\t}\n",
-
-                    "\t\t// Add a key to the instance cache to prevent other instances of this script on the same program instance.",
-                    "\t\tthis.cache.Add(this.controller, this.key, true);\n",
-
-                    "\t\t// Attach event",
-                    "\t\tthis.connect();",
+                    "\t\t// Attach events",
+                    "\t\tthis.attachEvents();",
                 "\t}",
             "}\n",
 

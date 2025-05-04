@@ -38,6 +38,16 @@ Press `Tab` to cycle through variables.
 
 ## Change Log
 
+## 1.2.0
+- Revert back attaching and detaching of events since H5 change how H5 scripts are loaded
+
+## 1.1.0
+- Changed attaching and detaching of events on simpler approach
+- Renamed connect and disconnect to attachEvents and detachEvents respectively
+
+## 1.0.5
+- Cleanup busyindicator snippet
+
 ### 1.0.3
 - Fixed license and change logs
 
